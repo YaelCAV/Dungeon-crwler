@@ -24,11 +24,11 @@ public class Main {
 
         renderTimer.start();
 
-        Sprite test = new Sprite(
-                ImageIO.read(new File("./Sprites/tree.png")),0,0,64,64);
+        DynamicSprite test = new DynamicSprite(
+                ImageIO.read(new File("./Sprites/RagMan.png")),0,0,32,32, 1,4 ,2,Direction.EAST,0,110);
         renderEngine.addToRenderList(test);
-
-
+        GameEngine game = new GameEngine(test);
+        renderEngine.addKeyListener(game);
     }
 
     public static void main (String[] args) throws Exception {

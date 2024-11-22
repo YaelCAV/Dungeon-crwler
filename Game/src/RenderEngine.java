@@ -34,8 +34,8 @@ public class RenderEngine extends JFrame {
     public void paint(){
 
         for (Displayable d : renderList){
-        d.draw(this);
-        this.setVisible(true);
+            d.draw(this);
+            this.setVisible(true);
     }
 
     }

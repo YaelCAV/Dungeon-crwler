@@ -1,21 +1,22 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class Sprite extends JPanel implements Displayable {
 
-    private Image spriteSheet;
-    private int x;
-    private int y;
-    private int width;
-    private int height;
+    protected BufferedImage spriteSheet;
+    protected int x;
+    protected int y;
+    protected int w;
+    protected int h;
 
-    public Sprite(Image spriteSheet, int x, int y, int width, int height) {
+    public Sprite(BufferedImage spriteSheet, int x, int y, int w, int h) {
 
         this.spriteSheet = spriteSheet;
         this.x = x;
         this.y = y;
-        this.width = width;
-        this.height = height;
+        this.w = w;
+        this.h = h;
     }
 
     @Override
@@ -27,7 +28,7 @@ public class Sprite extends JPanel implements Displayable {
     @Override
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
-        g.drawImage(spriteSheet,x,y,width,height,null,null);
+
 
     }
 }
