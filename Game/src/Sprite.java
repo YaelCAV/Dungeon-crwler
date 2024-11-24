@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 public class Sprite extends JPanel implements Displayable {
@@ -17,7 +18,12 @@ public class Sprite extends JPanel implements Displayable {
         this.y = y;
         this.w = w;
         this.h = h;
+        this.setOpaque(false);
     }
+    public Rectangle2D.Double getHitBox(){
+        return new Rectangle2D.Double(x,y,w,h);
+    }
+    public boolean intersection(Rectangle2D.Double hitBox){ return this.getHitBox().intersects(hitBox);}
 
     @Override
     public void draw(RenderEngine r) {
@@ -28,7 +34,8 @@ public class Sprite extends JPanel implements Displayable {
     @Override
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
-
+        g.drawImage(spriteSheet,x,y,w,h,null,null);
 
     }
+
 }
