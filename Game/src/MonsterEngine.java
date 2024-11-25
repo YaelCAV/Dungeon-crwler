@@ -26,12 +26,12 @@ public class MonsterEngine implements Engine {
         }
         monster.patternTracker= (monster.patternTracker+1)%monster.pattern.length();
 
-        System.out.println(monster.patternTracker);
+
 
     }
     public void update(){
     this.patternProgress();
-    System.out.println("patternProgress()");
+
 
     }
 }

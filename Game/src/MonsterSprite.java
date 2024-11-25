@@ -50,7 +50,7 @@ public class MonsterSprite extends Sprite{
         }
 
 
-            System.out.println(pattern);
+
 
     }
 
@@ -87,16 +87,12 @@ public class MonsterSprite extends Sprite{
 
     public void moveIfPossible(ArrayList<Sprite> environment){
         if (isMovingPossible(environment)){
-            if (this.isWalking ==true){
-                move();
-                System.out.println("shouldmove");}
+            if (this.isWalking ==true){move();}
         }}
 
 
 
     private void move(){
-        System.out.println("move");
-        System.out.println(direction);
         switch (direction){
             case NORTH ->this.y-=speed;
             case WEST ->this.x-=speed;

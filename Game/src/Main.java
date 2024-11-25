@@ -13,7 +13,8 @@ public class Main {
     RenderEngine renderEngine;
     PhysicsEngine physicsEngine;
     GameEngine gameEngine;
-    MonsterEngine monsterEngine;
+    MonsterEngine monsterEngineFlame;
+    MonsterEngine monsterEngineTengu;
 
     public Main() throws Exception{
 
@@ -25,26 +26,32 @@ public class Main {
                 ImageIO.read(new File("./Game/Sprites/Characters/RedNinja3/SpriteSheet.png")),82,82,16,16, 5,4 ,2,Direction.EAST,0,0);
         MonsterSprite flame = new MonsterSprite(
                 ImageIO.read(new File("./Game/Sprites/SpriteSheet.png")),140,102,16,16, 5,4 ,2,Direction.EAST,0,0,"./Game/Patterns/Flame.txt");
-
+        MonsterSprite Tengu = new MonsterSprite(
+                ImageIO.read(new File("./Game/Sprites/Characters/Tengu2/SpriteSheet.png")),200,120,16,16, 7,4 ,2,Direction.EAST,0,0,"./Game/Patterns/Tengu.txt");
         renderEngine.addToRenderList(player);
         gameEngine = new GameEngine(player);
-        monsterEngine = new MonsterEngine(flame);
+        monsterEngineFlame = new MonsterEngine(flame);
+        monsterEngineTengu = new MonsterEngine(Tengu);
         renderEngine.addToRenderList(flame);
+        renderEngine.addToRenderList(Tengu);
         renderEngine.addKeyListener(gameEngine);
 
 
         physicsEngine.addToMoving(player);
         physicsEngine.addToMoving(flame);
+        physicsEngine.addToMoving(Tengu);
 
 
         Timer renderTimer = new Timer(50,(time)-> renderEngine.update());
         Timer gameTimer = new Timer(50,(time)-> gameEngine.update());
         Timer physicTimer = new Timer(50,(time)-> physicsEngine.update());
-        Timer monsterTimer = new Timer(50,(time)-> monsterEngine.update());
+        Timer monsterTimer = new Timer(50,(time)-> monsterEngineFlame.update());
+        Timer monsterTimer2 = new Timer(50,(time)-> monsterEngineTengu.update());
         renderTimer.start();
         gameTimer.start();
         physicTimer.start();
         monsterTimer.start();
+        monsterTimer2.start();
 
         Level level1 = new Level("./Game/Levels/level1.txt");
         for (Displayable levelRendering :level1.getSpriteList()) {
