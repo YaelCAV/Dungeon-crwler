@@ -1,5 +1,6 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public class Main {
     GameEngine gameEngine;
     MonsterEngine monsterEngineFlame;
     MonsterEngine monsterEngineTengu;
-
+    HUD hud;
     public Main() throws Exception{
 
 
@@ -23,41 +24,45 @@ public class Main {
         renderEngine = new RenderEngine();
         physicsEngine = new PhysicsEngine(new ArrayList<DynamicSprite>(),new ArrayList<Sprite>(),new ArrayList<MonsterSprite>());
         DynamicSprite player = new DynamicSprite(
-                ImageIO.read(new File("./Game/Sprites/Characters/RedNinja3/SpriteSheet.png")),82,82,16,16, 5,4 ,2,Direction.EAST,0,0);
+                ImageIO.read(new File("./Game/Sprites/Characters/RedNinja3/SpriteSheet.png")),82,82,16,16, 7,4 ,2,Direction.EAST,4);
         MonsterSprite flame = new MonsterSprite(
                 ImageIO.read(new File("./Game/Sprites/SpriteSheet.png")),140,102,16,16, 5,4 ,2,Direction.EAST,0,0,"./Game/Patterns/Flame.txt");
         MonsterSprite Tengu = new MonsterSprite(
                 ImageIO.read(new File("./Game/Sprites/Characters/Tengu2/SpriteSheet.png")),200,120,16,16, 7,4 ,2,Direction.EAST,0,0,"./Game/Patterns/Tengu.txt");
         renderEngine.addToRenderList(player);
+        hud = new HUD(player,"./Game/Sprites/UI/FacesetBox.png","./Game/Sprites/Characters/RedNinja3/Faceset.png","./Game/Sprites/UI/heart.png");
         gameEngine = new GameEngine(player);
         monsterEngineFlame = new MonsterEngine(flame);
         monsterEngineTengu = new MonsterEngine(Tengu);
         renderEngine.addToRenderList(flame);
         renderEngine.addToRenderList(Tengu);
         renderEngine.addKeyListener(gameEngine);
-
+        renderEngine.addToRenderList(hud);
 
         physicsEngine.addToMoving(player);
         physicsEngine.addToMoving(flame);
         physicsEngine.addToMoving(Tengu);
 
 
-        Timer renderTimer = new Timer(50,(time)-> renderEngine.update());
-        Timer gameTimer = new Timer(50,(time)-> gameEngine.update());
-        Timer physicTimer = new Timer(50,(time)-> physicsEngine.update());
-        Timer monsterTimer = new Timer(50,(time)-> monsterEngineFlame.update());
-        Timer monsterTimer2 = new Timer(50,(time)-> monsterEngineTengu.update());
-        renderTimer.start();
+        Timer gameTimer = new Timer(50,(time)->{
+                renderEngine.update();
+                gameEngine.update();;
+                physicsEngine.update();
+                monsterEngineFlame.update();
+                monsterEngineTengu.update();
+                hud.update();
+        });
+
         gameTimer.start();
-        physicTimer.start();
-        monsterTimer.start();
-        monsterTimer2.start();
+
 
         Level level1 = new Level("./Game/Levels/level1.txt");
         for (Displayable levelRendering :level1.getSpriteList()) {
             renderEngine.addToRenderList(levelRendering);
         }
         physicsEngine.setEnvironment(level1.getSolidSpriteList());
+
+        System.out.println(level1.getSolidSpriteList());
 
 
         }

@@ -30,8 +30,7 @@ public Level (String pathName){
         while (line!= null){
             for (byte element : line.getBytes(StandardCharsets.UTF_8)){
                 switch (element){
-                    case 'T' : environment.add(new SolidSprite(imageTree,columnNumber*imageTreeWidth,
-                            lineNumber*imageTreeHeight, imageTreeWidth, imageTreeHeight));
+                    case 'T' : environment.add(new SolidSprite(imageTree,columnNumber*imageTreeWidth,lineNumber*imageTreeHeight,imageTreeWidth,imageTreeHeight));
                         break;
                     case ' ' : environment.add(new Sprite(imageGrass,columnNumber*imageGrassWidth,
                             lineNumber*imageGrassHeight,  imageGrassWidth, imageGrassHeight));

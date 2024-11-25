@@ -14,7 +14,7 @@ public class MonsterEngine implements Engine {
 
 
     private void patternProgress(){
-            System.out.println(monster.pattern.charAt(monster.patternTracker));
+
 
             switch(monster.pattern.charAt(monster.patternTracker)){
             case 'N' -> monster.setDirection(Direction.NORTH);
@@ -34,4 +34,5 @@ public class MonsterEngine implements Engine {
 
 
     }
+
 }

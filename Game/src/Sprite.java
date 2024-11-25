@@ -34,6 +34,7 @@ public class Sprite extends JPanel implements Displayable {
     @Override
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
+
         g.drawImage(spriteSheet,x,y,w,h,null,null);
 
     }

@@ -39,7 +39,11 @@ public void update(){
     }
     for (MonsterSprite M :monsterSpriteList){
         M.moveIfPossible(environment);
+        M.encounterPlayer(movingSpriteList);
+
+    }
+
 
     }
 }
-}
+

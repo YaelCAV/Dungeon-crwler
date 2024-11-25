@@ -9,7 +9,7 @@ public class GameEngine implements Engine,KeyListener {
     }
 
     public void update(){
-
+        player.runningSpeed();
     }
 
 
@@ -19,7 +19,7 @@ public class GameEngine implements Engine,KeyListener {
             case KeyEvent.VK_Z:
                 player.setDirection(Direction.NORTH);
                 player.isWalking = true;
-                System.out.println("north");
+
                 break;
             case KeyEvent.VK_S:
                 player.isWalking = true;
@@ -33,6 +33,9 @@ public class GameEngine implements Engine,KeyListener {
                 player.isWalking = true;
                 player.setDirection(Direction.EAST);
                 break;
+            case KeyEvent.VK_CONTROL:
+                player.isRunning = true;
+
         }
 
     }
@@ -44,21 +47,23 @@ public class GameEngine implements Engine,KeyListener {
         switch (e.getKeyCode()){
             case KeyEvent.VK_Z:
                 player.setDirection(Direction.NORTH);
-
-                System.out.println("north");
+                player.isWalking = false;
                 break;
             case KeyEvent.VK_S:
-
+                player.isWalking = false;
                 player.setDirection(Direction.SOUTH);
                 break;
             case KeyEvent.VK_Q:
-
+                player.isWalking = false;
                 player.setDirection(Direction.WEST);
                 break;
             case KeyEvent.VK_D:
-
+                player.isWalking = false;
                 player.setDirection(Direction.EAST);
-                break;}
-        player.isWalking = false;
+                break;
+            case KeyEvent.VK_CONTROL:
+                player.isRunning = false;
+        }
+
     }
 }

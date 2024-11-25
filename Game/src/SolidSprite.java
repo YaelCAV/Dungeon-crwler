@@ -12,6 +12,7 @@ public class SolidSprite extends Sprite {
     @Override
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
+
         g.drawImage(spriteSheet,x,y,w,h,null,null);
 
     }}

@@ -11,6 +11,7 @@ public class MonsterSprite extends Sprite{
 
 
     private double speed;
+
     private int spriteSheetNumberOfColumn;
     private int timeBetweenFrame;
     private Direction direction;
@@ -68,14 +69,14 @@ public class MonsterSprite extends Sprite{
     private boolean isMovingPossible(ArrayList<Sprite> environment) {
         Rectangle2D.Double hitbox = new Rectangle2D.Double() ;
         switch (direction){
-            case NORTH->hitbox.setRect(super.getHitBox().getX()+w/5,super.getHitBox().getY()+h/2-speed,super.getHitBox().getWidth()*3/5,super.getHitBox().getHeight()/2);
-            case WEST -> hitbox.setRect(super.getHitBox().getX()+w/5-speed,super.getHitBox().getY()+h/2,super.getHitBox().getWidth()*3/5,super.getHitBox().getHeight()/2);
+            case NORTH->hitbox.setRect(super.getHitBox().getX()+w/2,super.getHitBox().getY()+h/2-speed,super.getHitBox().getWidth()*3/5,super.getHitBox().getHeight()/2);
+            case WEST -> hitbox.setRect(super.getHitBox().getX()+w/2-speed,super.getHitBox().getY()+h/2,super.getHitBox().getWidth()*3/5,super.getHitBox().getHeight()/2);
             case EAST -> hitbox.setRect(super.getHitBox().getX()+w/5+speed,super.getHitBox().getY()+h/2,super.getHitBox().getWidth()*3/5,super.getHitBox().getHeight()/2);
-            case SOUTH -> hitbox.setRect(super.getHitBox().getX()+w/5,super.getHitBox().getY()+h/2+speed,super.getHitBox().getWidth()*3/5,super.getHitBox().getHeight()/2);
+            case SOUTH -> hitbox.setRect(super.getHitBox().getX()+w/2,super.getHitBox().getY()+h/2+speed,super.getHitBox().getWidth()*3/5,super.getHitBox().getHeight()/2);
         }
         for (Sprite e : environment){
             if ((e != this )&&(hitbox.intersects(e.getHitBox()))&&e instanceof SolidSprite){
-                System.out.println("monster stuck");
+
                 return false;}
 
 
@@ -102,18 +103,25 @@ public class MonsterSprite extends Sprite{
 
 
         }}
+    public void encounterPlayer(ArrayList<DynamicSprite> dynamicSprites){
+        for(DynamicSprite p : dynamicSprites){
+            if (this.getHitBox().intersects(p.getHitBox())){
+            p.health = p.health-1;}
+        }
+    }
     @Override
     protected void paintComponent(Graphics g) {
 
         //super.paintComponent(g);
         Graphics2D g2=(Graphics2D)g;
+        g2.translate(x,y);
         g2.scale(2, 2);
 
 
 
-        g.drawImage(spriteSheet.getSubimage((attitude-1)*w+spriteAlignmentX,
+        g2.drawRenderedImage(spriteSheet.getSubimage((attitude-1)*w+spriteAlignmentX,
                 h*iterator+spriteAlignmentY,
-                w,h), x, y, w, h, null, null);
+                w,h), null);
         if(isWalking){
             iterator = (iterator+1)%spriteSheetNumberOfColumn;
         }}
