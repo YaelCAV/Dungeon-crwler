@@ -6,6 +6,7 @@ public class MonsterEngine implements Engine {
 
     private final MonsterSprite monster;
 
+    private int Behaviour;
     public MonsterEngine(MonsterSprite monster) {
         this.monster = monster;
     }
@@ -13,29 +14,24 @@ public class MonsterEngine implements Engine {
 
 
     private void patternProgress(){
+            System.out.println(monster.pattern.charAt(monster.patternTracker));
 
-        String patternString = new String();
-        try{
-            patternString = monster.pattern.readLine();
-        }
-        catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        switch(patternString.charAt(monster.patternTracker)){
+            switch(monster.pattern.charAt(monster.patternTracker)){
             case 'N' -> monster.setDirection(Direction.NORTH);
             case 'S' -> monster.setDirection(Direction.SOUTH);
             case 'E' -> monster.setDirection(Direction.EAST);
             case 'W' -> monster.setDirection(Direction.WEST);
-            case 'm' -> monster.isWalking = true;
-            case 'h' -> monster.isWalking = false;
+            case 'm' -> monster.setWalking(true);
+            case 'h' -> monster.setWalking(false);
         }
-        monster.patternTracker= (monster.patternTracker+1)%patternString.length();
+        monster.patternTracker= (monster.patternTracker+1)%monster.pattern.length();
 
-
+        System.out.println(monster.patternTracker);
 
     }
     public void update(){
     this.patternProgress();
-    System.out.println("pattern progress");
+    System.out.println("patternProgress()");
+
     }
 }

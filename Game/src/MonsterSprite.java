@@ -18,9 +18,9 @@ public class MonsterSprite extends Sprite{
     int iterator = 0;
     int spriteAlignmentX;
     int spriteAlignmentY;
-    public boolean isWalking;
+    public boolean isWalking ;
     public int patternTracker = 0;
-    BufferedReader pattern;
+    public String pattern;
 
     public MonsterSprite(BufferedImage spriteSheet, int x, int y, int w, int h, double speed,int spriteSheetNumberOfColumn, int timeBetweenFrame, Direction direction, int spriteAlignmentX, int spriteAlignmentY, String patternPath) {
         super(spriteSheet, x, y, w, h);
@@ -31,18 +31,39 @@ public class MonsterSprite extends Sprite{
         this.direction = direction;
         this.spriteAlignmentX = spriteAlignmentX;
         this.spriteAlignmentY = spriteAlignmentY;
+        try{
+            BufferedReader br = new BufferedReader(new FileReader(patternPath));
+            StringBuilder sb = new StringBuilder();
+            String line = br.readLine();
 
-        try {
-            this.pattern = new BufferedReader(new FileReader(patternPath));
+
+            while (line != null) {
+                sb.append(line);
+                sb.append(System.lineSeparator());
+                line = br.readLine();
+            }
+            this.pattern = sb.toString();
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
+
+
+            System.out.println(pattern);
+
     }
 
     public void setDirection(Direction direction) {
         this.direction = direction;
         this.attitude = direction.getFrameLineNumber();
     }
+
+    public void setWalking(boolean walking) {
+        isWalking = walking;
+    }
+
+
 
     private boolean isMovingPossible(ArrayList<Sprite> environment) {
         Rectangle2D.Double hitbox = new Rectangle2D.Double() ;
@@ -54,7 +75,7 @@ public class MonsterSprite extends Sprite{
         }
         for (Sprite e : environment){
             if ((e != this )&&(hitbox.intersects(e.getHitBox()))&&e instanceof SolidSprite){
-
+                System.out.println("monster stuck");
                 return false;}
 
 
@@ -67,12 +88,15 @@ public class MonsterSprite extends Sprite{
     public void moveIfPossible(ArrayList<Sprite> environment){
         if (isMovingPossible(environment)){
             if (this.isWalking ==true){
-                move();}
+                move();
+                System.out.println("shouldmove");}
         }}
 
 
 
     private void move(){
+        System.out.println("move");
+        System.out.println(direction);
         switch (direction){
             case NORTH ->this.y-=speed;
             case WEST ->this.x-=speed;

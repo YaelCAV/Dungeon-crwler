@@ -39,6 +39,7 @@ public void update(){
     }
     for (MonsterSprite M :monsterSpriteList){
         M.moveIfPossible(environment);
+
     }
 }
 }

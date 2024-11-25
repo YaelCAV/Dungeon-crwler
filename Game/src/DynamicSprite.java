@@ -60,14 +60,17 @@ public class DynamicSprite extends Sprite {
 
     private boolean isMovingPossible(ArrayList<Sprite> environment) {
         Rectangle2D.Double hitbox = new Rectangle2D.Double() ;
+
         switch (direction){
-            case NORTH->hitbox.setRect(super.getHitBox().getX()+w/5,super.getHitBox().getY()+h/2-speed,super.getHitBox().getWidth()*3/5,super.getHitBox().getHeight()/2);
-            case WEST -> hitbox.setRect(super.getHitBox().getX()+w/5-speed,super.getHitBox().getY()+h/2,super.getHitBox().getWidth()*3/5,super.getHitBox().getHeight()/2);
-            case EAST -> hitbox.setRect(super.getHitBox().getX()+w/5+speed,super.getHitBox().getY()+h/2,super.getHitBox().getWidth()*3/5,super.getHitBox().getHeight()/2);
-            case SOUTH -> hitbox.setRect(super.getHitBox().getX()+w/5,super.getHitBox().getY()+h/2+speed,super.getHitBox().getWidth()*3/5,super.getHitBox().getHeight()/2);
+            case NORTH->hitbox.setRect(super.getHitBox().getX(),super.getHitBox().getY()+h/2-speed,super.getHitBox().getWidth(),super.getHitBox().getHeight()/2);
+            case WEST -> hitbox.setRect(super.getHitBox().getX()-speed,super.getHitBox().getY()+h/2,super.getHitBox().getWidth(),super.getHitBox().getHeight()/2);
+            case EAST -> hitbox.setRect(super.getHitBox().getX()+speed,super.getHitBox().getY()+h/2,super.getHitBox().getWidth(),super.getHitBox().getHeight()/2);
+            case SOUTH -> hitbox.setRect(super.getHitBox().getX(),super.getHitBox().getY()+speed+h/2,super.getHitBox().getWidth(),super.getHitBox().getHeight()/2);
         }
         for (Sprite e : environment){
             if ((e != this )&&(hitbox.intersects(e.getHitBox()))&&e instanceof SolidSprite){
+            System.out.println("Y"+e.y);
+            System.out.println("X:"+e.x);
 
                 return false;}
 
@@ -76,6 +79,11 @@ public class DynamicSprite extends Sprite {
 
         return true;
     }
+
+
+    public boolean encounterEnemy;
+
+
 
 
     public void moveIfPossible(ArrayList<Sprite> environment){
