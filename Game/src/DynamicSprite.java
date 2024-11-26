@@ -12,10 +12,14 @@ public class DynamicSprite extends Sprite {
     private double runningSpeed;
     private final int spriteSheetNumberOfColumn;
     private int timeBetweenFrame;
+    private int invincibilityBuffer= 0;
     private Direction direction;
+    private CharacterState characterState;
     private int attitude = 1;
     int iterator = 0;
     public int health;
+
+
     public DynamicSprite(BufferedImage spriteSheet, int x, int y, int w, int h, double speed, int spriteSheetNumberOfColumn, int timeBetweenFrame, Direction direction,int health) {
         super(spriteSheet, x, y, w, h);
 
@@ -48,16 +52,42 @@ public class DynamicSprite extends Sprite {
         g2.translate(x,y);
         g2.scale(2, 2);
 
+        switch(characterState){
+            case WALKING :
+                g2.drawRenderedImage(spriteSheet.getSubimage((attitude-1)*w,
+                        h*iterator,
+                        w,h), null);
+                if(isWalking){
+                    iterator = (iterator+1)%spriteSheetNumberOfColumn;
+                }
+                break;
+            case IDLE:
+                //g2.drawRenderedImage(spriteSheet.getSubimage((attitude-1)*w,
+                     //   h*iterator,
+                     //   w,h), null);
+                break;
+            case ATTACKING:
+               // g2.drawRenderedImage(spriteSheet.getSubimage((attitude-1)*w,
+                   //     h*iterator,
+                       // w,h), null);
+                break;
+            case DEAD:{}
 
+            break;
 
-        g2.drawRenderedImage(spriteSheet.getSubimage((attitude-1)*w,
-                h*iterator,
-                w,h), null);
-        if(isWalking){
-            iterator = (iterator+1)%spriteSheetNumberOfColumn;
+            case JUMPING:{}
+            break;
+
         }
 
 
+
+
+    }
+    public void checkHealth(){
+        if( health <= 0){
+            this.characterState = CharacterState.DEAD;
+        }
     }
 
     private void move(){
@@ -88,8 +118,24 @@ public class DynamicSprite extends Sprite {
 
 
         }
-
+        this.characterState = CharacterState.WALKING;
         return true;
+
+    }
+
+    public void truceTime(){
+        if (this.invincibilityBuffer<25) {
+            this.invincibilityBuffer = this.invincibilityBuffer + 1;
+        }
+    }
+    public void getDamaged(int damage){
+        if (this.invincibilityBuffer<25){
+
+        }
+        else{
+            this.health = this.health-damage;
+            this.invincibilityBuffer = 0;
+        }
     }
 
 
@@ -100,7 +146,8 @@ public class DynamicSprite extends Sprite {
 
     public void moveIfPossible(ArrayList<Sprite> environment){
         if (isMovingPossible(environment)){
-            if (this.isWalking ==true){
+            this.characterState = CharacterState.WALKING;
+            if (this.isWalking && this.characterState!= CharacterState.WALKING){
             move();}
         }
 

@@ -26,9 +26,9 @@ public class Main {
         DynamicSprite player = new DynamicSprite(
                 ImageIO.read(new File("./Game/Sprites/Characters/RedNinja3/SpriteSheet.png")),82,82,16,16, 7,4 ,2,Direction.EAST,4);
         MonsterSprite flame = new MonsterSprite(
-                ImageIO.read(new File("./Game/Sprites/SpriteSheet.png")),140,102,16,16, 5,4 ,2,Direction.EAST,0,0,"./Game/Patterns/Flame.txt");
+                ImageIO.read(new File("./Game/Sprites/Beast.png")),800,102,16,16, 5,4 ,2,Direction.EAST,0,0,"./Game/Patterns/Flame.txt");
         MonsterSprite Tengu = new MonsterSprite(
-                ImageIO.read(new File("./Game/Sprites/Characters/Tengu2/SpriteSheet.png")),200,120,16,16, 7,4 ,2,Direction.EAST,0,0,"./Game/Patterns/Tengu.txt");
+                ImageIO.read(new File("./Game/Sprites/Characters/Tengu2/SpriteSheet.png")),400,300,16,16, 7,4 ,2,Direction.EAST,0,0,"./Game/Patterns/Tengu.txt");
         renderEngine.addToRenderList(player);
         hud = new HUD(player,"./Game/Sprites/UI/FacesetBox.png","./Game/Sprites/Characters/RedNinja3/Faceset.png","./Game/Sprites/UI/heart.png");
         gameEngine = new GameEngine(player);

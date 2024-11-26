@@ -21,7 +21,7 @@ public class MonsterEngine implements Engine {
             case 'S' -> monster.setDirection(Direction.SOUTH);
             case 'E' -> monster.setDirection(Direction.EAST);
             case 'W' -> monster.setDirection(Direction.WEST);
-            case 'm' -> monster.setWalking(true);
+            case 'm' -> monster.addStep();
             case 'h' -> monster.setWalking(false);
         }
         monster.patternTracker= (monster.patternTracker+1)%monster.pattern.length();

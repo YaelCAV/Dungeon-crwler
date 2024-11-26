@@ -10,6 +10,8 @@ public class GameEngine implements Engine,KeyListener {
 
     public void update(){
         player.runningSpeed();
+        player.truceTime();
+        player.checkHealth();
     }
 
 

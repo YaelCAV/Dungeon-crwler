@@ -22,6 +22,7 @@ public class MonsterSprite extends Sprite{
     public boolean isWalking ;
     public int patternTracker = 0;
     public String pattern;
+    private int stepsLeft;
 
     public MonsterSprite(BufferedImage spriteSheet, int x, int y, int w, int h, double speed,int spriteSheetNumberOfColumn, int timeBetweenFrame, Direction direction, int spriteAlignmentX, int spriteAlignmentY, String patternPath) {
         super(spriteSheet, x, y, w, h);
@@ -85,10 +86,21 @@ public class MonsterSprite extends Sprite{
         return true;
     }
 
+    public void addStep(){
+        this.stepsLeft =this.stepsLeft+1;
+    }
+
 
     public void moveIfPossible(ArrayList<Sprite> environment){
         if (isMovingPossible(environment)){
-            if (this.isWalking ==true){move();}
+            if(this.stepsLeft>0){
+                this.isWalking = true;
+                this.stepsLeft = this.stepsLeft-1;
+                move();
+
+            } else {
+                this.isWalking = false;
+            }
         }}
 
 
@@ -106,7 +118,7 @@ public class MonsterSprite extends Sprite{
     public void encounterPlayer(ArrayList<DynamicSprite> dynamicSprites){
         for(DynamicSprite p : dynamicSprites){
             if (this.getHitBox().intersects(p.getHitBox())){
-            p.health = p.health-1;}
+            p.getDamaged(1);}
         }
     }
     @Override
