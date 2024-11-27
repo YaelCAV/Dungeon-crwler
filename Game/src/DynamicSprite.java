@@ -14,10 +14,11 @@ public class DynamicSprite extends Sprite {
     private int timeBetweenFrame;
     private int invincibilityBuffer= 0;
     private Direction direction;
-    private CharacterState characterState;
+    private CharacterState characterState = CharacterState.IDLE;
     private int attitude = 1;
     int iterator = 0;
     public int health;
+    public int idleBuffer=0;
 
 
     public DynamicSprite(BufferedImage spriteSheet, int x, int y, int w, int h, double speed, int spriteSheetNumberOfColumn, int timeBetweenFrame, Direction direction,int health) {
@@ -31,6 +32,9 @@ public class DynamicSprite extends Sprite {
         this.runningSpeed =speed*1.6;
     }
 
+    public void setRunning(Boolean running) {
+        isRunning = running;
+    }
 
     public void runningSpeed(){
         if(this.isRunning){
@@ -44,6 +48,7 @@ public class DynamicSprite extends Sprite {
         this.attitude = direction.getFrameLineNumber();
     }
 
+
     @Override
     protected void paintComponent(Graphics g) {
 
@@ -53,25 +58,26 @@ public class DynamicSprite extends Sprite {
         g2.scale(2, 2);
 
         switch(characterState){
-            case WALKING :
+            case WALKING :{
                 g2.drawRenderedImage(spriteSheet.getSubimage((attitude-1)*w,
                         h*iterator,
                         w,h), null);
                 if(isWalking){
                     iterator = (iterator+1)%spriteSheetNumberOfColumn;
-                }
+                }}
                 break;
             case IDLE:
                 //g2.drawRenderedImage(spriteSheet.getSubimage((attitude-1)*w,
                      //   h*iterator,
                      //   w,h), null);
                 break;
-            case ATTACKING:
-               // g2.drawRenderedImage(spriteSheet.getSubimage((attitude-1)*w,
-                   //     h*iterator,
-                       // w,h), null);
+            case ATTACKING: {
+                g2.drawRenderedImage(spriteSheet.getSubimage((attitude - 1) * w,
+                        h * 4, w, h), null);
+
+                 }
                 break;
-            case DEAD:{}
+            case DEAD:{g2.drawRenderedImage(spriteSheet.getSubimage(0,16*6,w,h),null);}
 
             break;
 
@@ -88,6 +94,19 @@ public class DynamicSprite extends Sprite {
         if( health <= 0){
             this.characterState = CharacterState.DEAD;
         }
+    }
+    public void attack(){
+        this.characterState = CharacterState.ATTACKING;
+        System.out.println(this.characterState);
+
+    }
+    public void idle(){
+
+    }
+
+    public void setWalking(Boolean walking) {
+
+        isWalking = walking;
     }
 
     private void move(){
@@ -115,10 +134,8 @@ public class DynamicSprite extends Sprite {
 
 
                 return false;}
-
-
         }
-        this.characterState = CharacterState.WALKING;
+
         return true;
 
     }
@@ -145,10 +162,16 @@ public class DynamicSprite extends Sprite {
 
 
     public void moveIfPossible(ArrayList<Sprite> environment){
-        if (isMovingPossible(environment)){
-            this.characterState = CharacterState.WALKING;
-            if (this.isWalking && this.characterState!= CharacterState.WALKING){
-            move();}
+        if (this.characterState!=CharacterState.DEAD){
+                if (isMovingPossible(environment)){
+                    if (isWalking){
+                      this.characterState = CharacterState.WALKING;
+                        move();
+                    }
+
+            }
+
+
         }
 
     }

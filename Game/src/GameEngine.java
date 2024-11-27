@@ -12,6 +12,9 @@ public class GameEngine implements Engine,KeyListener {
         player.runningSpeed();
         player.truceTime();
         player.checkHealth();
+        if (player.idleBuffer == 10){
+            player.idle();
+        }
     }
 
 
@@ -20,24 +23,27 @@ public class GameEngine implements Engine,KeyListener {
         switch (e.getKeyCode()){
             case KeyEvent.VK_Z:
                 player.setDirection(Direction.NORTH);
-                player.isWalking = true;
-
+                player.setWalking(true);
+                player.idleBuffer = player.idleBuffer-1;
                 break;
             case KeyEvent.VK_S:
-                player.isWalking = true;
+                player.setWalking(true);
                 player.setDirection(Direction.SOUTH);
                 break;
             case KeyEvent.VK_Q:
-                player.isWalking = true;
+                player.setWalking(true);
                 player.setDirection(Direction.WEST);
                 break;
             case KeyEvent.VK_D:
-                player.isWalking = true;
+                player.setWalking(true);
                 player.setDirection(Direction.EAST);
                 break;
             case KeyEvent.VK_CONTROL:
-                player.isRunning = true;
-
+                player.setRunning(true);
+                break;
+            case KeyEvent.VK_E:
+                player.attack();
+                break;
         }
 
     }
@@ -49,18 +55,18 @@ public class GameEngine implements Engine,KeyListener {
         switch (e.getKeyCode()){
             case KeyEvent.VK_Z:
                 player.setDirection(Direction.NORTH);
-                player.isWalking = false;
+                player.setWalking(false);
                 break;
             case KeyEvent.VK_S:
-                player.isWalking = false;
+                player.setWalking(false);
                 player.setDirection(Direction.SOUTH);
                 break;
             case KeyEvent.VK_Q:
-                player.isWalking = false;
+                player.setWalking(false);
                 player.setDirection(Direction.WEST);
                 break;
             case KeyEvent.VK_D:
-                player.isWalking = false;
+                player.setWalking(false);
                 player.setDirection(Direction.EAST);
                 break;
             case KeyEvent.VK_CONTROL:
