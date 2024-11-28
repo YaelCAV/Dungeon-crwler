@@ -1,3 +1,13 @@
+package main.entities;
+
+
+import main.engines.Engine;
+import main.engines.RenderEngine;
+import main.entities.*;
+import main.entities.entitiesEnums.Weapon;
+import main.entities.physicalEntities.DynamicSprite;
+
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -6,7 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class HUD extends JPanel implements Engine,Displayable{
+public class HUD extends JPanel implements Engine, Displayable {
     private String boxPath;
     private String faceSetPath;
     private String heartPath;

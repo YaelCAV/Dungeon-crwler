@@ -1,6 +1,13 @@
+package main.engines;
+
+import main.entities.physicalEntities.DynamicSprite;
+import main.entities.entitiesEnums.CharacterState;
+import main.entities.entitiesEnums.Direction;
+import main.entities.entitiesEnums.Weapon;
+
 import java.awt.event.*;
 
-public class GameEngine implements Engine,KeyListener {
+public class GameEngine implements Engine, KeyListener {
 
     private final DynamicSprite player;
 
@@ -8,16 +15,15 @@ public class GameEngine implements Engine,KeyListener {
         this.player = player;
     }
 
-    public void update(){
+    public void update() {
         player.runningSpeed();
         player.truceTime();
         player.checkHealth();
-        if (player.idleBuffer == 10){
-            if(player.getCharacterState()!=CharacterState.DEAD)
-            player.idle();
+        if (player.idleBuffer == 10) {
+            if (player.getCharacterState() != CharacterState.DEAD)
+                player.idle();
 
-        }
-        else {
+        } else {
             player.idleBuffer += 5;
         }
     }
@@ -25,7 +31,7 @@ public class GameEngine implements Engine,KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        switch (e.getKeyCode()){
+        switch (e.getKeyCode()) {
             case KeyEvent.VK_Z:
                 player.setDirection(Direction.NORTH);
                 player.setWalking(true);
@@ -54,18 +60,26 @@ public class GameEngine implements Engine,KeyListener {
                 player.attack();
                 player.idleBuffer = -30;
                 break;
-            case KeyEvent.VK_1:
+            case KeyEvent.VK_W:
                 player.setWeapon(Weapon.SAI);
+                break;
+            case KeyEvent.VK_X:
+                player.setWeapon(Weapon.CLUB);
+                break;
+            case KeyEvent.VK_C:
+                player.setWeapon(Weapon.KATANA);
                 break;
         }
 
     }
+
     @Override
-    public void keyTyped(KeyEvent e){
+    public void keyTyped(KeyEvent e) {
 
     }
-    public void keyReleased(KeyEvent e){
-        switch (e.getKeyCode()){
+
+    public void keyReleased(KeyEvent e) {
+        switch (e.getKeyCode()) {
             case KeyEvent.VK_Z:
                 player.setDirection(Direction.NORTH);
                 player.setWalking(false);

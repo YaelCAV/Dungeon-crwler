@@ -1,4 +1,6 @@
-import java.awt.*;
+package main.entities;
+
+import main.engines.RenderEngine;
 
 public interface Displayable {
 

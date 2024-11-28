@@ -1,0 +1,12 @@
+{
+  "MonsterSprite": {
+    "name": {},
+    "imagePath": {},
+    "speed": {},
+    "spriteSheetNumberOfColumn": {},
+    "timeBetweenFrame": {},
+    "defaultDirection": {},
+    "health": {},
+    "weapon": {}
+  }
+}

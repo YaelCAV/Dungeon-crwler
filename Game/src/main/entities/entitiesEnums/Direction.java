@@ -1,3 +1,5 @@
+package main.entities.entitiesEnums;
+
 public enum Direction {
     NORTH(2),
     SOUTH(1),

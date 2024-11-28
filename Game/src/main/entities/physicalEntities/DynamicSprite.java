@@ -1,3 +1,9 @@
+package main.entities.physicalEntities;
+
+import main.entities.Sprite;
+import main.entities.entitiesEnums.CharacterState;
+import main.entities.entitiesEnums.Direction;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
@@ -66,39 +72,39 @@ public class DynamicSprite extends Sprite {
         g2.scale(2, 2);
 
         switch (characterState) {
-            case WALKING: {
+            case CharacterState.WALKING: {
                 g2.drawRenderedImage(spriteSheet.getSubimage((attitude - 1) * w, h * iterator, w, h), null);
                 if (isWalking) {
                     iterator = (iterator + 1) % spriteSheetNumberOfColumn;
                 }
             }
             break;
-            case IDLE: {
+            case CharacterState.IDLE: {
                 g2.drawRenderedImage(spriteSheet.getSubimage((attitude - 1) * w, 0, h, h), null);
             }
             break;
-            case ATTACKING: {
+            case CharacterState.ATTACKING: {
                 g2.drawRenderedImage(spriteSheet.getSubimage((attitude - 1) * w, h * 4, w, h), null);
                 switch (direction) {
-                    case EAST: {
+                    case Direction.EAST: {
                         g2.translate(w, h);
                         g2.rotate(Math.PI*3/2);
                         g2.drawRenderedImage(weaponSprite, null);
                     }
                     break;
-                    case WEST: {
-                        g2.translate(-7,8 );
+                    case Direction.WEST: {
+                        g2.translate(-6,8 );
                         g2.rotate(Math.PI/2,weaponSprite.getWidth()/2,weaponSprite.getHeight()/2);
                         g2.drawRenderedImage(weaponSprite, null);
                     }
                     break;
-                    case NORTH: {
+                    case Direction.NORTH: {
                         g2.translate(2, -h/2);
                         g2.rotate(Math.PI ,weaponSprite.getWidth()/2,weaponSprite.getHeight()/2);
                         g2.drawRenderedImage(weaponSprite, null);
                     }
                     break;
-                    case SOUTH: {
+                    case Direction.SOUTH: {
                         g2.translate(4, h);
                         g2.rotate(0);
                         g2.drawRenderedImage(weaponSprite, null);
@@ -110,11 +116,11 @@ public class DynamicSprite extends Sprite {
                 g2.drawRenderedImage(weaponSprite, null);
             }
             break;
-            case DEAD: {
+            case CharacterState.DEAD: {
                 g2.drawRenderedImage(spriteSheet.getSubimage(0, 16 * 6, w, h), null);
             }
             break;
-            case JUMPING: {
+            case CharacterState.JUMPING: {
             }
             break;
         }
@@ -146,7 +152,7 @@ public class DynamicSprite extends Sprite {
 
     public void attack() {
         this.characterState = CharacterState.ATTACKING;
-        System.out.println(this.characterState);
+
 
     }
 
@@ -162,24 +168,24 @@ public class DynamicSprite extends Sprite {
 
     private void move() {
         switch (direction) {
-            case NORTH -> this.y -= bufferSpeed;
-            case WEST -> this.x -= bufferSpeed;
-            case EAST -> this.x += bufferSpeed;
-            case SOUTH -> this.y += bufferSpeed;
+            case Direction.NORTH -> this.y -= bufferSpeed;
+            case Direction.WEST -> this.x -= bufferSpeed;
+            case Direction.EAST -> this.x += bufferSpeed;
+            case Direction.SOUTH -> this.y += bufferSpeed;
         }
     }
 
     private MonsterSprite attackHitSprite(ArrayList<MonsterSprite> environment) {
         Rectangle2D.Double hitbox = new Rectangle2D.Double();
-        int attack_Range = 30 * this.weapon.getWeaponRange();
+        double attack_Range = 3.2 * this.weapon.getWeaponRange();
         switch (direction) {
-            case NORTH ->
-                    hitbox.setRect(super.getHitBox().getX(), super.getHitBox().getY(), super.getHitBox().getWidth(), super.getHitBox().getHeight() - attack_Range);
-            case WEST ->
-                    hitbox.setRect(super.getHitBox().getX(), super.getHitBox().getY(), super.getHitBox().getWidth() - attack_Range, super.getHitBox().getHeight());
-            case EAST ->
+            case Direction.NORTH ->
+                    hitbox.setRect(super.getHitBox().getX(), super.getHitBox().getY()-attack_Range, super.getHitBox().getWidth(), super.getHitBox().getHeight() + attack_Range);
+            case Direction.WEST ->
+                    hitbox.setRect(super.getHitBox().getX()-attack_Range, super.getHitBox().getY(), super.getHitBox().getWidth() +attack_Range, super.getHitBox().getHeight());
+            case Direction.EAST ->
                     hitbox.setRect(super.getHitBox().getX(), super.getHitBox().getY(), super.getHitBox().getWidth() + attack_Range, super.getHitBox().getHeight());
-            case SOUTH ->
+            case Direction.SOUTH ->
                     hitbox.setRect(super.getHitBox().getX(), super.getHitBox().getY(), super.getHitBox().getWidth(), super.getHitBox().getHeight() + attack_Range);
         }
         for (MonsterSprite e : environment) {
@@ -194,10 +200,10 @@ public class DynamicSprite extends Sprite {
         if ((this.characterState != CharacterState.DEAD) && (this.characterState == CharacterState.ATTACKING)) {
 
             MonsterSprite attacked = attackHitSprite(environment);
-            System.out.println(attacked);
+
             if (attacked != null) {
                 attacked.getDamaged(this.weapon.getWeaponDamage());
-                System.out.println("getDamaged");
+
             }
 
         }
@@ -208,13 +214,13 @@ public class DynamicSprite extends Sprite {
         Rectangle2D.Double hitbox = new Rectangle2D.Double();
 
         switch (direction) {
-            case NORTH ->
+            case Direction.NORTH ->
                     hitbox.setRect(super.getHitBox().getX() + w / 2, super.getHitBox().getY() + h / 2 - bufferSpeed, super.getHitBox().getWidth() * 3 / 5, super.getHitBox().getHeight() / 2);
-            case WEST ->
+            case Direction.WEST ->
                     hitbox.setRect(super.getHitBox().getX() + w / 2 - bufferSpeed, super.getHitBox().getY() + h / 2, super.getHitBox().getWidth() * 3 / 5, super.getHitBox().getHeight() / 2);
-            case EAST ->
+            case Direction.EAST ->
                     hitbox.setRect(super.getHitBox().getX() + w / 5 + bufferSpeed, super.getHitBox().getY() + h / 2, super.getHitBox().getWidth() * 3 / 5, super.getHitBox().getHeight() / 2);
-            case SOUTH ->
+            case Direction.SOUTH ->
                     hitbox.setRect(super.getHitBox().getX() + w / 2, super.getHitBox().getY() + h / 2 + bufferSpeed, super.getHitBox().getWidth() * 3 / 5, super.getHitBox().getHeight() / 2);
         }
         for (Sprite e : environment) {

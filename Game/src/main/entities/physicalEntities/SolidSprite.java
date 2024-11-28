@@ -1,6 +1,9 @@
+package main.entities.physicalEntities;
+
+import main.entities.Sprite;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 
 public class SolidSprite extends Sprite {
 

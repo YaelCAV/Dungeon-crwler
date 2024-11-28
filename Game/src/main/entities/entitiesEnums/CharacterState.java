@@ -1,3 +1,5 @@
+package main.entities.entitiesEnums;
+
 public enum CharacterState {
     WALKING,
     ATTACKING,

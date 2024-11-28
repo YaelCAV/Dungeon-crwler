@@ -1,3 +1,7 @@
+package main.entities;
+
+import main.engines.RenderEngine;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;

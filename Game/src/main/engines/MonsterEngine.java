@@ -1,4 +1,7 @@
-import java.io.IOException;
+package main.engines;
+
+import main.entities.entitiesEnums.*;
+import main.entities.physicalEntities.MonsterSprite;
 
 public class MonsterEngine implements Engine {
 
@@ -22,6 +25,7 @@ public class MonsterEngine implements Engine {
             case 'W' -> monster.setDirection(Direction.WEST);
             case 'm' -> monster.addStep();
             case 'h' -> monster.setWalking(false);
+            case 'a' -> monster.attack();
         }
         monster.patternTracker = (monster.patternTracker + 1) % monster.pattern.length();
 
