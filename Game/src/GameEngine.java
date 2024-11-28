@@ -13,7 +13,12 @@ public class GameEngine implements Engine,KeyListener {
         player.truceTime();
         player.checkHealth();
         if (player.idleBuffer == 10){
+            if(player.getCharacterState()!=CharacterState.DEAD)
             player.idle();
+
+        }
+        else {
+            player.idleBuffer += 5;
         }
     }
 
@@ -24,25 +29,33 @@ public class GameEngine implements Engine,KeyListener {
             case KeyEvent.VK_Z:
                 player.setDirection(Direction.NORTH);
                 player.setWalking(true);
-                player.idleBuffer = player.idleBuffer-1;
+                player.idleBuffer = 0;
                 break;
             case KeyEvent.VK_S:
                 player.setWalking(true);
                 player.setDirection(Direction.SOUTH);
+                player.idleBuffer = 0;
                 break;
             case KeyEvent.VK_Q:
                 player.setWalking(true);
                 player.setDirection(Direction.WEST);
+                player.idleBuffer = 0;
                 break;
             case KeyEvent.VK_D:
                 player.setWalking(true);
                 player.setDirection(Direction.EAST);
+                player.idleBuffer = 0;
                 break;
             case KeyEvent.VK_CONTROL:
                 player.setRunning(true);
+                player.idleBuffer = 0;
                 break;
             case KeyEvent.VK_E:
                 player.attack();
+                player.idleBuffer = -30;
+                break;
+            case KeyEvent.VK_1:
+                player.setWeapon(Weapon.SAI);
                 break;
         }
 

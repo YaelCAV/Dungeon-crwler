@@ -17,6 +17,8 @@ public class HUD extends JPanel implements Engine,Displayable{
     private int presentHeart;
     private int xBox,yBox,xFace,yFace,xHeart,yHeart;
     private DynamicSprite player;
+    private Weapon playerWeapon;
+    private BufferedImage weaponSprite;
     public HUD(DynamicSprite player, String boxPath, String faceSetPath, String heartPath) {
         this.boxPath = boxPath;
         this.faceSetPath = faceSetPath;
@@ -34,6 +36,13 @@ public class HUD extends JPanel implements Engine,Displayable{
     public void update(){
         this.presentHeart =player.health;
         if (presentHeart< 0){presentHeart=0;}
+        this.playerWeapon= player.getWeapon();
+
+       // try {
+           // this.weaponSprite = ImageIO.read(new File(playerWeapon.getWeaponSpritePath()));
+       // }
+     //catch (IOException e) {
+      //  throw new RuntimeException(e); }
     }
 
     public void paintHUD(Graphics g){
@@ -57,6 +66,8 @@ public class HUD extends JPanel implements Engine,Displayable{
         g2.drawRenderedImage(faceSetSprite,null);
 
         g2.drawRenderedImage(heartSprite.getSubimage(presentHeart*16,0,16,16),null);
+        //g2.translate(10,10);
+        //g2.drawRenderedImage(weaponSprite,null);
           //      h*iterator+spriteAlignmentY,
             //    w,h), null);
           }

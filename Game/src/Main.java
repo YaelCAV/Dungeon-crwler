@@ -25,22 +25,22 @@ public class Main {
         physicsEngine = new PhysicsEngine(new ArrayList<DynamicSprite>(),new ArrayList<Sprite>(),new ArrayList<MonsterSprite>());
         DynamicSprite player = new DynamicSprite(
                 ImageIO.read(new File("./Game/Sprites/Characters/RedNinja3/SpriteSheet.png")),82,82,16,16, 7,4 ,2,Direction.EAST,4);
-        MonsterSprite flame = new MonsterSprite(
-                ImageIO.read(new File("./Game/Sprites/Beast.png")),800,102,16,16, 5,4 ,2,Direction.EAST,0,0,"./Game/Patterns/Flame.txt");
+      //  MonsterSprite flame = new MonsterSprite(
+                //ImageIO.read(new File("./Game/Sprites/Beast.png")),800,102,16,16, 5,4 ,2,Direction.EAST,"./Game/Patterns/Flame.txt",30);
         MonsterSprite Tengu = new MonsterSprite(
-                ImageIO.read(new File("./Game/Sprites/Characters/Tengu2/SpriteSheet.png")),400,300,16,16, 7,4 ,2,Direction.EAST,0,0,"./Game/Patterns/Tengu.txt");
+                ImageIO.read(new File("./Game/Sprites/Characters/Tengu2/SpriteSheet.png")),400,300,16,16, 7,4 ,2,Direction.EAST,"./Game/Patterns/Tengu.txt",60);
         renderEngine.addToRenderList(player);
         hud = new HUD(player,"./Game/Sprites/UI/FacesetBox.png","./Game/Sprites/Characters/RedNinja3/Faceset.png","./Game/Sprites/UI/heart.png");
         gameEngine = new GameEngine(player);
-        monsterEngineFlame = new MonsterEngine(flame);
+        //monsterEngineFlame = new MonsterEngine(flame);
         monsterEngineTengu = new MonsterEngine(Tengu);
-        renderEngine.addToRenderList(flame);
+        //renderEngine.addToRenderList(flame);
         renderEngine.addToRenderList(Tengu);
         renderEngine.addKeyListener(gameEngine);
         renderEngine.addToRenderList(hud);
 
         physicsEngine.addToMoving(player);
-        physicsEngine.addToMoving(flame);
+        //physicsEngine.addToMoving(flame);
         physicsEngine.addToMoving(Tengu);
 
 
@@ -48,7 +48,7 @@ public class Main {
                 renderEngine.update();
                 gameEngine.update();;
                 physicsEngine.update();
-                monsterEngineFlame.update();
+                //monsterEngineFlame.update();
                 monsterEngineTengu.update();
                 hud.update();
         });

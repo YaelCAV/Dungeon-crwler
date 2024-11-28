@@ -36,10 +36,12 @@ public class PhysicsEngine implements Engine {
 public void update(){
     for (DynamicSprite S :movingSpriteList) {
         S.moveIfPossible(environment);
+        S.attackIfPossible(monsterSpriteList);
     }
     for (MonsterSprite M :monsterSpriteList){
         M.moveIfPossible(environment);
         M.encounterPlayer(movingSpriteList);
+
 
     }
 
