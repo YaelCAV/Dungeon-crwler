@@ -37,9 +37,11 @@ public class Sprite extends JPanel implements Displayable {
     }
     @Override
     protected void paintComponent(Graphics g){
-        super.paintComponent(g);
+        Graphics2D g2 = (Graphics2D) g;
+        g2.scale(1, 1);
+        g2.translate(x, y);
+        g2.drawRenderedImage(spriteSheet,null);
 
-        g.drawImage(spriteSheet,x,y,w,h,null,null);
 
     }
 

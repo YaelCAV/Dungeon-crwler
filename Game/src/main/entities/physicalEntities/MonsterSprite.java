@@ -1,5 +1,6 @@
 package main.entities.physicalEntities;
 
+import main.engines.MonsterEngine;
 import main.entities.Sprite;
 import main.entities.entitiesEnums.*;
 import main.entities.entitiesEnums.Direction;
@@ -11,19 +12,19 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
 
-public class MonsterSprite extends Sprite {
+public class MonsterSprite extends Sprite implements Characters {
 
 
-    private double speed;
-    private int spriteSheetNumberOfColumn;
-    private int timeBetweenFrame;
-    private Direction direction;
-    private int attitude = 1;
-    int iterator = 0;
-
+    private final double speed;
+    private final int spriteSheetNumberOfColumn;
+    private final int timeBetweenFrame;
+    private final MonsterEngine monsterEngine;
     public boolean isWalking;
     public int patternTracker = 0;
     public String pattern;
+    int iterator = 0;
+    private Direction direction;
+    private int attitude = 1;
     private int stepsLeft;
     private int invincibilityBuffer = 0;
     private int health;
@@ -39,6 +40,7 @@ public class MonsterSprite extends Sprite {
         this.direction = direction;
         this.health = health;
         this.weapon = weapon;
+        this.monsterEngine = new MonsterEngine(this);
         try {
             this.weaponSprite = ImageIO.read(new File(this.weapon.getWeaponSpriteInHandPath()));
             BufferedReader br = new BufferedReader(new FileReader(patternPath));
@@ -52,7 +54,6 @@ public class MonsterSprite extends Sprite {
                 line = br.readLine();
             }
             this.pattern = sb.toString();
-            System.out.println(this.pattern);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
@@ -62,13 +63,11 @@ public class MonsterSprite extends Sprite {
 
     }
 
-    public Weapon getWeapon() {
-        return weapon;
-    }
-
-    public CharacterState getCharacterState() {
-        return characterState;
-    }
+    /**
+     * ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+     *
+     * @Setters ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+     */
 
     public void setDirection(Direction direction) {
         this.direction = direction;
@@ -79,35 +78,34 @@ public class MonsterSprite extends Sprite {
         isWalking = walking;
     }
 
-
-    private boolean isMovingPossible(ArrayList<Sprite> environment) {
-        Rectangle2D.Double hitbox = new Rectangle2D.Double();
-        switch (direction) {
-            case Direction.NORTH ->
-                    hitbox.setRect(super.getHitBox().getX() + w / 2, super.getHitBox().getY() + h / 2 - speed, super.getHitBox().getWidth() * 3 / 5, super.getHitBox().getHeight() / 2);
-            case Direction.WEST ->
-                    hitbox.setRect(super.getHitBox().getX() + w / 2 - speed, super.getHitBox().getY() + h / 2, super.getHitBox().getWidth() * 3 / 5, super.getHitBox().getHeight() / 2);
-            case Direction.EAST ->
-                    hitbox.setRect(super.getHitBox().getX() + w / 5 + speed, super.getHitBox().getY() + h / 2, super.getHitBox().getWidth() * 3 / 5, super.getHitBox().getHeight() / 2);
-            case Direction.SOUTH ->
-                    hitbox.setRect(super.getHitBox().getX() + w / 2, super.getHitBox().getY() + h / 2 + speed, super.getHitBox().getWidth() * 3 / 5, super.getHitBox().getHeight() / 2);
+    /**
+     * ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+     *
+     * @Getters ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+     */
+    public void checkHealth() {
+        if (health <= 0) {
+            this.characterState = CharacterState.DEAD;
         }
-        for (Sprite e : environment) {
-            if ((e != this) && (hitbox.intersects(e.getHitBox())) && e instanceof SolidSprite) {
-
-                return false;
-            }
-
-
-        }
-
-        return true;
     }
 
-    public void addStep() {
-        this.stepsLeft = this.stepsLeft + 1;
+    public void attack() {
+        this.characterState = CharacterState.ATTACKING;
     }
 
+    public Weapon getWeapon() {
+        return weapon;
+    }
+
+    public CharacterState getCharacterState() {
+        return characterState;
+    }
+
+    /**
+     * ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+     *
+     * @checks ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+     */
 
     public void moveIfPossible(ArrayList<Sprite> environment) {
         if (isMovingPossible(environment)) {
@@ -126,16 +124,34 @@ public class MonsterSprite extends Sprite {
         }
     }
 
+    /**
+     * ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+     *
+     * @HitBoxes ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+     */
 
-    private void move() {
+    private boolean isMovingPossible(ArrayList<Sprite> environment) {
+        Rectangle2D.Double hitbox = new Rectangle2D.Double();
         switch (direction) {
-            case Direction.NORTH -> this.y -= speed;
-            case Direction.WEST -> this.x -= speed;
-            case Direction.EAST -> this.x += speed;
-            case Direction.SOUTH -> this.y += speed;
+            case Direction.NORTH ->
+                    hitbox.setRect(super.getHitBox().getX() + (double) w / 2, super.getHitBox().getY() + (double) h / 2 - speed, super.getHitBox().getWidth() * 3 / 5, super.getHitBox().getHeight() / 2);
+            case Direction.WEST ->
+                    hitbox.setRect(super.getHitBox().getX() + (double) w / 2 - speed, super.getHitBox().getY() + (double) h / 2, super.getHitBox().getWidth() * 3 / 5, super.getHitBox().getHeight() / 2);
+            case Direction.EAST ->
+                    hitbox.setRect(super.getHitBox().getX() + (double) w / 5 + speed, super.getHitBox().getY() + (double) h / 2, super.getHitBox().getWidth() * 3 / 5, super.getHitBox().getHeight() / 2);
+            case Direction.SOUTH ->
+                    hitbox.setRect(super.getHitBox().getX() + (double) w / 2, super.getHitBox().getY() + (double) h / 2 + speed, super.getHitBox().getWidth() * 3 / 5, super.getHitBox().getHeight() / 2);
+        }
+        for (Sprite e : environment) {
+            if ((e != this) && (hitbox.intersects(e.getHitBox())) && e instanceof SolidSprite) {
+
+                return false;
+            }
 
 
         }
+
+        return true;
     }
 
     public void encounterPlayer(ArrayList<DynamicSprite> dynamicSprites) {
@@ -151,10 +167,31 @@ public class MonsterSprite extends Sprite {
         }
     }
 
-    public void getDamaged(int damage) {
-        if (this.invincibilityBuffer < 10) {
+    private Rectangle2D attackHitBox() {
+        Rectangle2D.Double hitbox = new Rectangle2D.Double();
+        int attack_Range = 5 * this.weapon.getWeaponRange();
+        switch (direction) {
+            case Direction.NORTH ->
+                    hitbox.setRect(super.getHitBox().getX(), super.getHitBox().getY() - attack_Range, super.getHitBox().getWidth(), super.getHitBox().getHeight() + attack_Range);
+            case Direction.WEST ->
+                    hitbox.setRect(super.getHitBox().getX() - attack_Range, super.getHitBox().getY(), super.getHitBox().getWidth() + attack_Range, super.getHitBox().getHeight());
+            case Direction.EAST ->
+                    hitbox.setRect(super.getHitBox().getX(), super.getHitBox().getY(), super.getHitBox().getWidth() + attack_Range, super.getHitBox().getHeight());
+            case Direction.SOUTH ->
+                    hitbox.setRect(super.getHitBox().getX(), super.getHitBox().getY(), super.getHitBox().getWidth(), super.getHitBox().getHeight() + attack_Range);
+        }
 
-        } else {
+        return hitbox;
+    }
+
+    /**
+     * ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+     * Game Interactions
+     * ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+     */
+
+    public void getDamaged(int damage) {
+        if (this.invincibilityBuffer >= 10) {
             this.health = this.health - damage;
             this.invincibilityBuffer = 0;
             System.out.println(this.health);
@@ -167,35 +204,28 @@ public class MonsterSprite extends Sprite {
         }
     }
 
-    public void checkHealth() {
-        if (health <= 0) {
-            this.characterState = CharacterState.DEAD;
-        }
+    public void addStep() {
+        this.stepsLeft = this.stepsLeft + 1;
     }
 
-    public void attack() {
-        this.characterState = CharacterState.ATTACKING;
-
-
-    }
-
-
-    private Rectangle2D attackHitBox() {
-        Rectangle2D.Double hitbox = new Rectangle2D.Double();
-        int attack_Range = 5 * this.weapon.getWeaponRange();
+    private void move() {
         switch (direction) {
-            case Direction.NORTH ->
-                    hitbox.setRect(super.getHitBox().getX(), super.getHitBox().getY()-attack_Range, super.getHitBox().getWidth(), super.getHitBox().getHeight() + attack_Range);
-            case Direction.WEST ->
-                    hitbox.setRect(super.getHitBox().getX()-attack_Range, super.getHitBox().getY(), super.getHitBox().getWidth() + attack_Range , super.getHitBox().getHeight());
-            case Direction.EAST ->
-                    hitbox.setRect(super.getHitBox().getX(), super.getHitBox().getY(), super.getHitBox().getWidth() + attack_Range , super.getHitBox().getHeight());
-            case Direction.SOUTH ->
-                    hitbox.setRect(super.getHitBox().getX(), super.getHitBox().getY(), super.getHitBox().getWidth(), super.getHitBox().getHeight() + attack_Range);
-        }
+            case Direction.NORTH -> this.y -= (int) speed;
+            case Direction.WEST -> this.x -= (int) speed;
+            case Direction.EAST -> this.x += (int) speed;
+            case Direction.SOUTH -> this.y += (int) speed;
 
-        return hitbox;
+
+        }
     }
+
+    /**
+     * ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+     *
+     * @Graphics Paints following Direction and CharacterState
+     * In Attack state a weapon image is painted but is not considered as independent Sprite
+     * ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+     */
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -226,13 +256,13 @@ public class MonsterSprite extends Sprite {
                     break;
                     case Direction.WEST: {
                         g2.translate(-7, 8);
-                        g2.rotate(Math.PI / 2, weaponSprite.getWidth() / 2, weaponSprite.getHeight() / 2);
+                        g2.rotate(Math.PI / 2, (double) weaponSprite.getWidth() / 2, (double) weaponSprite.getHeight() / 2);
                         g2.drawRenderedImage(weaponSprite, null);
                     }
                     break;
                     case Direction.NORTH: {
                         g2.translate(2, -h / 2);
-                        g2.rotate(Math.PI, weaponSprite.getWidth() / 2, weaponSprite.getHeight() / 2);
+                        g2.rotate(Math.PI, (double) weaponSprite.getWidth() / 2, (double) weaponSprite.getHeight() / 2);
                         g2.drawRenderedImage(weaponSprite, null);
                     }
                     break;

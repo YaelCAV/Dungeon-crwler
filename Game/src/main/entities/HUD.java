@@ -25,16 +25,17 @@ public class HUD extends JPanel implements Engine, Displayable {
     private BufferedImage faceSetSprite;
     private BufferedImage heartSprite;
     private int presentHeart;
-    private int xBox,yBox,xFace,yFace,xHeart,yHeart;
+    private int xBox, yBox, xFace, yFace, xHeart, yHeart;
     private DynamicSprite player;
     private Weapon playerWeapon;
     private BufferedImage weaponSprite;
+
     public HUD(DynamicSprite player, String boxPath, String faceSetPath, String heartPath) {
         this.boxPath = boxPath;
         this.faceSetPath = faceSetPath;
         this.heartPath = heartPath;
         this.player = player;
-        try{
+        try {
             this.boxSprite = ImageIO.read(new File(boxPath));
             this.faceSetSprite = ImageIO.read(new File(faceSetPath));
             this.heartSprite = ImageIO.read(new File(heartPath));
@@ -43,21 +44,23 @@ public class HUD extends JPanel implements Engine, Displayable {
         }
     }
 
-    public void update(){
-        this.presentHeart =player.health;
-        if (presentHeart< 0){presentHeart=0;}
-        this.playerWeapon= player.getWeapon();
+    public void update() {
+        this.presentHeart = player.health;
+        if (presentHeart < 0) {
+            presentHeart = 0;
+        }
+        this.playerWeapon = player.getWeapon();
 
-       // try {
-           // this.weaponSprite = ImageIO.read(new File(playerWeapon.getWeaponSpritePath()));
-       // }
-     //catch (IOException e) {
-      //  throw new RuntimeException(e); }
+        // try {
+        // this.weaponSprite = ImageIO.read(new File(playerWeapon.getWeaponSpritePath()));
+        // }
+        //catch (IOException e) {
+        //  throw new RuntimeException(e); }
     }
 
-    public void paintHUD(Graphics g){
+    public void paintHUD(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(heartSprite,0,-640,16,16,null,null);
+        g.drawImage(heartSprite, 0, -640, 16, 16, null, null);
 
     }
 
@@ -65,22 +68,23 @@ public class HUD extends JPanel implements Engine, Displayable {
     protected void paintComponent(Graphics g) {
 
 
-        Graphics2D g2=(Graphics2D)g;
-        g2.translate(0,this.getHeight()-64*2-14);
+        Graphics2D g2 = (Graphics2D) g;
+        g2.translate(0, this.getHeight() - 64 * 2 - 14);
         g2.scale(3, 3);
-        g2.drawRenderedImage(boxSprite,null);
+        g2.drawRenderedImage(boxSprite, null);
 
         g2.scale(1, 1);
-        g2.translate(4,4);
+        g2.translate(4, 4);
 
-        g2.drawRenderedImage(faceSetSprite,null);
+        g2.drawRenderedImage(faceSetSprite, null);
 
-        g2.drawRenderedImage(heartSprite.getSubimage(presentHeart*16,0,16,16),null);
+        g2.drawRenderedImage(heartSprite.getSubimage(presentHeart * 16, 0, 16, 16), null);
         //g2.translate(10,10);
         //g2.drawRenderedImage(weaponSprite,null);
-          //      h*iterator+spriteAlignmentY,
-            //    w,h), null);
-          }
+        //      h*iterator+spriteAlignmentY,
+        //    w,h), null);
+    }
+
     @Override
     public void draw(RenderEngine r) {
         r.remove(this);

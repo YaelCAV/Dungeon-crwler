@@ -1,0 +1,12 @@
+{
+  "MonsterSprite": {
+    "name": "Tengu",
+    "imagePath":"Game/Sprites/Characters/Tengu2/SpriteSheet.png",
+    "speed": 7,
+    "spriteSheetNumberOfColumn":4,
+    "timeBetweenFrame": 2,
+    "defaultDirection": "Direction.EAST",
+    "health": 60,
+    "weapon": "Weapon.SAI"
+  }
+}

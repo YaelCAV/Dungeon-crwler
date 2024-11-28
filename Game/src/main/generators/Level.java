@@ -11,23 +11,23 @@ import java.io.FileReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
-public class Level {
+public class Level implements LevelGeneration{
     private final ArrayList<Sprite> environment = new ArrayList<>();
     private final ArrayList<MonsterSprite> monsterList = new ArrayList<>();
     public Level(String pathName) {
         try {
-            final BufferedImage imageTree = ImageIO.read(new File("./Game/Sprites/tree.png"));
-            final BufferedImage imageGrass = ImageIO.read(new File("./Game/Sprites/grass.png"));
-            final BufferedImage imageRock = ImageIO.read(new File("./Game/Sprites/rock.png"));
-            final BufferedImage imageTrap = ImageIO.read(new File("./Game/Sprites/trap.png"));
+            final BufferedImage imageTree = ImageIO.read(new File("./Game/Sprites/Terrain/tree.png"));
+            final BufferedImage imageGrass = ImageIO.read(new File("./Game/Sprites/Terrain/grass.png"));
+            final BufferedImage imageRock = ImageIO.read(new File("./Game/Sprites/Terrain/rock.png"));
+            final BufferedImage imageFlower = ImageIO.read(new File("./Game/Sprites/Terrain/flowers.png"));
             final int imageTreeWidth = imageTree.getWidth(null);
-            final int imageTreeHeight = imageTree.getHeight(null);
+            final int imageTreeHeight =imageTree.getHeight(null);
             final int imageGrassWidth = imageGrass.getWidth(null);
             final int imageGrassHeight = imageGrass.getHeight(null);
             final int imageRockWidth = imageRock.getWidth(null);
             final int imageRockHeight = imageRock.getHeight(null);
-            final int imageTrapWidth = imageRock.getWidth(null);
-            final int imageTrapHeight = imageRock.getHeight(null);
+            final int imageFlowersWidth = imageRock.getWidth(null);
+            final int imageFlowersHeight = imageRock.getHeight(null);
             BufferedReader bufferedReader = new BufferedReader(new FileReader(pathName));
             String line = bufferedReader.readLine();
             int lineNumber = 0;
@@ -38,7 +38,7 @@ public class Level {
                         case 'T':
                             environment.add(new SolidSprite(imageTree, columnNumber * imageTreeWidth, lineNumber * imageTreeHeight, imageTreeWidth, imageTreeHeight));
                             break;
-                        case ' ':
+                        case '#':
                             environment.add(new Sprite(imageGrass, columnNumber * imageGrassWidth,
                                     lineNumber * imageGrassHeight, imageGrassWidth, imageGrassHeight));
                             break;
@@ -46,9 +46,9 @@ public class Level {
                             environment.add(new SolidSprite(imageRock, columnNumber * imageRockWidth,
                                     lineNumber * imageRockHeight, imageRockWidth, imageRockHeight));
                             break;
-                        case 'H':
-                            environment.add(new SolidSprite(imageTrap, columnNumber * imageTrapWidth,
-                                    lineNumber * imageTrapHeight, imageTrapWidth, imageTrapHeight));
+                        case 'f':
+                            environment.add(new Sprite(imageFlower, columnNumber * imageFlowersWidth,
+                                    lineNumber * imageFlowersHeight, imageFlowersWidth, imageFlowersHeight));
                             break;
                         case '1':
 

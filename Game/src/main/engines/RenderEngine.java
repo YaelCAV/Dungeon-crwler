@@ -12,7 +12,7 @@ public class RenderEngine extends JFrame {
    public RenderEngine(){
        super("The Game");
        //this.setUndecorated(true);
-       this.setSize(854,640);
+       this.setSize(1280,640);
        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
        renderList = new ArrayList<>();
        this.setVisible(true);

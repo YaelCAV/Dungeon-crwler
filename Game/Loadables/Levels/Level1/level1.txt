@@ -1,10 +1,10 @@
-TTTTTTTTTTTTTTTTTTT
-T               TTT
-T   RT           TT
-T                 T
-T       R    TRT  T
-T                 T
-T   R            TT
-T               TTT
-TTTTTTTTTTTTTTTTTTT
-TTTTTTTTTTTTTTTTTTT
+TTTTTTTTTTTTTTTTTTTT
+T####f######f###TTTT
+T###RTf######f###TTT
+T#f###############TT
+T#######R####TRT##TT
+T#################TT
+T###R############TTT
+T###############TTTT
+TTTTTTTTTTTTTTTTTTTT
+TTTTTTTTTTTTTTTTTTTT
