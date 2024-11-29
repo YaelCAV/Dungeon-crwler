@@ -46,4 +46,12 @@ public class Sprite extends JPanel implements Displayable {
     }
 
 
+    public int getXcoords() {
+        return x;
+    }
+
+
+    public int getYcoords() {
+        return y;
+    }
 }

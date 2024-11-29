@@ -119,6 +119,8 @@ public class DynamicSprite extends Sprite implements Characters {
     }
 
 
+
+
     /**
      * ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
      *
@@ -185,11 +187,14 @@ public class DynamicSprite extends Sprite implements Characters {
 
         switch (direction) {
             case Direction.NORTH ->
-                    hitbox.setRect(super.getHitBox().getX() + (double) w / 2, super.getHitBox().getY() + (double) h / 2 - bufferSpeed, super.getHitBox().getWidth() * 3 / 5, super.getHitBox().getHeight() / 2);
+                    hitbox.setRect(getHitBox().getX() + (double) w / 2,
+                            super.getHitBox().getY() + (double) h / 2 - bufferSpeed,
+                            super.getHitBox().getWidth() * 3 / 5,
+                            super.getHitBox().getHeight() / 2);
             case Direction.WEST ->
                     hitbox.setRect(super.getHitBox().getX() + (double) w / 2 - bufferSpeed, super.getHitBox().getY() + (double) h / 2, super.getHitBox().getWidth() * 3 / 5, super.getHitBox().getHeight() / 2);
             case Direction.EAST ->
-                    hitbox.setRect(super.getHitBox().getX() + (double) w / 5 + bufferSpeed, super.getHitBox().getY() + (double) h / 2, super.getHitBox().getWidth() * 3 / 5, super.getHitBox().getHeight() / 2);
+                    hitbox.setRect(super.getHitBox().getX() + (double) w / 2 + bufferSpeed, super.getHitBox().getY() + (double) h / 2, super.getHitBox().getWidth() * 3 / 5, super.getHitBox().getHeight() / 2);
             case Direction.SOUTH ->
                     hitbox.setRect(super.getHitBox().getX() + (double) w / 2, super.getHitBox().getY() + (double) h / 2 + bufferSpeed, super.getHitBox().getWidth() * 3 / 5, super.getHitBox().getHeight() / 2);
         }
@@ -235,6 +240,7 @@ public class DynamicSprite extends Sprite implements Characters {
      *
      * @Graphics Paints following Direction and CharacterState
      * In Attack state a weapon image is painted but is not considered as independent Sprite
+     *
      * ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
      */
     @Override

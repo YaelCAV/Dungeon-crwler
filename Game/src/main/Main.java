@@ -32,6 +32,7 @@ public class Main {
     PhysicsEngine physicsEngine;
     GameEngine gameEngine;
     MonsterEngine monsterEngineSamurai;
+    MonsterEngine monsterEngineSamurai2;
     MonsterEngine monsterEngineTengu;
     MonsterEngine monsterEngineTengu2;
     HUD hud;
@@ -40,7 +41,8 @@ public class Main {
 
         //Entities construction
         DynamicSprite player = new DynamicSprite(ImageIO.read(new File("./Game/Sprites/Characters/RedNinja3/SpriteSheet.png")), 82, 82, 16, 16, 7, 4, 2, Direction.EAST, 4);
-        MonsterSprite Samurai = new MonsterSprite(ImageIO.read(new File("./Game/Sprites/Characters/Samurai/SpriteSheet.png")), 800, 102, 16, 16, 5, 4, 2, Direction.EAST, "./Game/Loadables/Patterns/Flame.txt", 30, Weapon.KATANA);
+        MonsterSprite Samurai = new MonsterSprite(ImageIO.read(new File("./Game/Sprites/Characters/Samurai/SpriteSheet.png")), 800, 102, 16, 16, 7, 4, 2, Direction.EAST, "./Game/Loadables/Patterns/Flame.txt", 30, Weapon.KATANA);
+        MonsterSprite Samurai2 = new MonsterSprite(ImageIO.read(new File("./Game/Sprites/Characters/Samurai/SpriteSheet.png")), 200, 400, 16, 16, 5, 4, 2, Direction.EAST, "./Game/Loadables/Patterns/Flame2.txt", 30, Weapon.KATANA);
         MonsterSprite Tengu = new MonsterSprite(ImageIO.read(new File("./Game/Sprites/Characters/Tengu2/SpriteSheet.png")), 400, 300, 16, 16, 7, 4, 2, Direction.EAST, "./Game/Loadables/Patterns/Tengu.txt", 60, Weapon.SAI);
         MonsterSprite Tengu2 = new MonsterSprite(ImageIO.read(new File("./Game/Sprites/Characters/Tengu2/SpriteSheet.png")), 600, 100, 16, 16, 7, 4, 2, Direction.EAST, "./Game/Loadables/Patterns/Tengu2.txt", 60, Weapon.CLUB);
         hud = new HUD(player, "./Game/Sprites/UI/FacesetBox.png", "./Game/Sprites/Characters/RedNinja3/Faceset.png", "./Game/Sprites/UI/heart.png");
@@ -49,14 +51,16 @@ public class Main {
         renderEngine = new RenderEngine();
         physicsEngine = new PhysicsEngine(new ArrayList<DynamicSprite>(), new ArrayList<Sprite>(), new ArrayList<MonsterSprite>());
         gameEngine = new GameEngine(player);
-        monsterEngineSamurai = new MonsterEngine(Samurai);
-        monsterEngineTengu = new MonsterEngine(Tengu);
-        monsterEngineTengu2 = new MonsterEngine(Tengu2);
+        monsterEngineSamurai = new MonsterEngine(Samurai,player);
+        monsterEngineSamurai2 = new MonsterEngine(Samurai2,player);
+        monsterEngineTengu = new MonsterEngine(Tengu,player);
+        monsterEngineTengu2 = new MonsterEngine(Tengu2,player);
 
        //Setting up renderEngine
         renderEngine.addKeyListener(gameEngine);
         renderEngine.addToRenderList(player);
         renderEngine.addToRenderList(Samurai);
+        renderEngine.addToRenderList(Samurai2);
         renderEngine.addToRenderList(Tengu);
         renderEngine.addToRenderList(Tengu2);
         renderEngine.addToRenderList(hud);
@@ -64,6 +68,7 @@ public class Main {
         //flimsy physics initialized
         physicsEngine.addToMoving(player);
         physicsEngine.addToMoving(Samurai);
+        physicsEngine.addToMoving(Samurai2);
         physicsEngine.addToMoving(Tengu);
         physicsEngine.addToMoving(Tengu2);
 
@@ -73,6 +78,7 @@ public class Main {
             gameEngine.update();
             physicsEngine.update();
             monsterEngineSamurai.update();
+            monsterEngineSamurai2.update();
             monsterEngineTengu.update();
             monsterEngineTengu2.update();
             hud.update();

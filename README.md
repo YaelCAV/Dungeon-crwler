@@ -1,6 +1,7 @@
 # JAVA GAME PROJECT
 <figure>
 <img src="/Game/Sprites/Characters/RedNinja3/Faceset.png" width="100" height="100">
+<img src="/Application/Still.png" width="300" height="150">
 </figure>
 
 ***
@@ -9,25 +10,25 @@
 ***
 ## Controls :
 
->|  Key  |         Action         |
->|:-----:|:----------------------:|
->|   Z   |           Up           |
->|   S   |          Down          |
->|   Q   |          Left          |
->|   D   |          Right         |
->|   E   |         Attack         |
->|   W   |  Switch weapon to Sai  |
->|    X  |  Switch weapon to Club |
->|   C   | Switch weapon to Katana |
->| CTRL (Hold) |      Run         |
+>|          Key           |         Action         |
+>|:----------------------:|:----------------------:|
+>|     <kbd>Z </kbd>      |           Up           |
+>|         <kbd>S         |          Down          |
+>|         <kbd>Q         |          Left          |
+>|         <kbd>D         |          Right         |
+>|         <kbd>E         |         Attack         |
+>|         <kbd>W         |  Switch weapon to Sai  |
+>|        <kbd> X         |  Switch weapon to Club |
+>|        <kbd> C         | Switch weapon to Katana |
+>| <kbd>CTRL </kbd>(Hold) |      Run         |
 
 ***
 ## Features :
 * Text File Level Generation.
 * Text File Enemy Pattern coding:
-*  * N,S,E,W - To Face Directions
-*   * h,m,a - halt for one frame , move for one step , attack for one frame (MUST BE no caps)
-
+*  * <kbd>N,S,E,W</kbd> - To Face Directions
+*   * <kbd>h,m,a</kbd> - halt for one frame , move for one step , attack for one frame (MUST BE no caps)
+* * **!NEW!** <kbd>P</kbd> for pathfinding step, supports auto directions
 ## WIP Features :
 * Json Enemy Storage for unique enemy integration to level generation.
 * Flavour decorations generations on map.

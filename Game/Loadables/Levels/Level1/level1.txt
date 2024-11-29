@@ -2,9 +2,9 @@ TTTTTTTTTTTTTTTTTTTT
 T####f######f###TTTT
 T###RTf######f###TTT
 T#f###############TT
-T#######R####TRT##TT
+T############TRT##TT
 T#################TT
 T###R############TTT
-T###############TTTT
+TTT#############TTTT
 TTTTTTTTTTTTTTTTTTTT
 TTTTTTTTTTTTTTTTTTTT

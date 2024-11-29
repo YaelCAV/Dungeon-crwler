@@ -18,7 +18,7 @@ public class MonsterSprite extends Sprite implements Characters {
     private final double speed;
     private final int spriteSheetNumberOfColumn;
     private final int timeBetweenFrame;
-    private final MonsterEngine monsterEngine;
+    //private final MonsterEngine monsterEngine;
     public boolean isWalking;
     public int patternTracker = 0;
     public String pattern;
@@ -31,6 +31,9 @@ public class MonsterSprite extends Sprite implements Characters {
     private CharacterState characterState = CharacterState.IDLE;
     private Weapon weapon;
     private BufferedImage weaponSprite;
+    public boolean isTracking;
+    private float trackX;
+    private float trackY;
 
     public MonsterSprite(BufferedImage spriteSheet, int x, int y, int w, int h, double speed, int spriteSheetNumberOfColumn, int timeBetweenFrame, Direction direction, String patternPath, int health, Weapon weapon) {
         super(spriteSheet, x, y, w, h);
@@ -40,7 +43,7 @@ public class MonsterSprite extends Sprite implements Characters {
         this.direction = direction;
         this.health = health;
         this.weapon = weapon;
-        this.monsterEngine = new MonsterEngine(this);
+        //this.monsterEngine = new MonsterEngine(this,encounterPlayer(););
         try {
             this.weaponSprite = ImageIO.read(new File(this.weapon.getWeaponSpriteInHandPath()));
             BufferedReader br = new BufferedReader(new FileReader(patternPath));
@@ -124,7 +127,7 @@ public class MonsterSprite extends Sprite implements Characters {
         }
     }
 
-    /**
+    /**s
      * ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
      *
      * @HitBoxes ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -134,13 +137,15 @@ public class MonsterSprite extends Sprite implements Characters {
         Rectangle2D.Double hitbox = new Rectangle2D.Double();
         switch (direction) {
             case Direction.NORTH ->
-                    hitbox.setRect(super.getHitBox().getX() + (double) w / 2, super.getHitBox().getY() + (double) h / 2 - speed, super.getHitBox().getWidth() * 3 / 5, super.getHitBox().getHeight() / 2);
+                    hitbox.setRect( super.getHitBox().getX() + (double) w / 2,
+                                    super.getHitBox().getY() + (double) h / 2 - speed,
+                                    super.getHitBox().getWidth() , super.getHitBox().getHeight() );
             case Direction.WEST ->
-                    hitbox.setRect(super.getHitBox().getX() + (double) w / 2 - speed, super.getHitBox().getY() + (double) h / 2, super.getHitBox().getWidth() * 3 / 5, super.getHitBox().getHeight() / 2);
+                    hitbox.setRect(super.getHitBox().getX() + (double) w / 2 - speed, super.getHitBox().getY() + (double) h / 2, super.getHitBox().getWidth() , super.getHitBox().getHeight() );
             case Direction.EAST ->
-                    hitbox.setRect(super.getHitBox().getX() + (double) w / 5 + speed, super.getHitBox().getY() + (double) h / 2, super.getHitBox().getWidth() * 3 / 5, super.getHitBox().getHeight() / 2);
+                    hitbox.setRect(super.getHitBox().getX() + (double) w / 2 + speed, super.getHitBox().getY() + (double) h / 2, super.getHitBox().getWidth() , super.getHitBox().getHeight() );
             case Direction.SOUTH ->
-                    hitbox.setRect(super.getHitBox().getX() + (double) w / 2, super.getHitBox().getY() + (double) h / 2 + speed, super.getHitBox().getWidth() * 3 / 5, super.getHitBox().getHeight() / 2);
+                    hitbox.setRect(super.getHitBox().getX() + (double) w / 2, super.getHitBox().getY() + (double) h / 2 + speed, super.getHitBox().getWidth() , super.getHitBox().getHeight() );
         }
         for (Sprite e : environment) {
             if ((e != this) && (hitbox.intersects(e.getHitBox())) && e instanceof SolidSprite) {
@@ -209,14 +214,82 @@ public class MonsterSprite extends Sprite implements Characters {
     }
 
     private void move() {
-        switch (direction) {
-            case Direction.NORTH -> this.y -= (int) speed;
-            case Direction.WEST -> this.x -= (int) speed;
-            case Direction.EAST -> this.x += (int) speed;
-            case Direction.SOUTH -> this.y += (int) speed;
+        if (isTracking) {
+            System.out.println(trackX);
+            System.out.println(trackY);
 
 
+            if (trackX > 0 && trackY > 0) {
+                if (Math.abs(x) > Math.abs(y)) {
+                    this.direction = Direction.EAST;
+                    System.out.println(direction);
+                } else {
+                    this.direction = Direction.SOUTH;
+                    System.out.println(direction);
+                }
+                this.x += (int) (this.trackX * speed);
+                this.y += (int) (this.trackY * speed);
+
+
+            } else if (trackX < 0 && trackY > 0) {
+                if (Math.abs(x) > Math.abs(y)) {
+                    this.direction = Direction.WEST;
+                    System.out.println(direction);
+                } else {
+                    this.direction = Direction.SOUTH;
+                    System.out.println(direction);
+                }
+                this.x += (int) (this.trackX * speed);
+                this.y += (int) (this.trackY * speed);
+
+            } else if (trackX < 0 && trackY < 0) {
+                if (Math.abs(x) > Math.abs(y)) {
+                    this.direction = Direction.WEST;
+                    System.out.println(direction);
+                } else {
+                    this.direction = Direction.NORTH;
+                    System.out.println(direction);
+                }
+                this.x += (int) (this.trackX * speed);
+                this.y += (int) (this.trackY * speed);
+
+            } else if (trackX > 0 && trackY < 0) {
+                if (Math.abs(x) > Math.abs(y)) {
+                    this.direction = Direction.EAST;
+                    System.out.println(direction);
+                } else {
+                    this.direction = Direction.NORTH;
+                    System.out.println(direction);
+                }
+                this.x += (int) (this.trackX * speed);
+                this.y += (int) (this.trackY * speed);
+            }
+        } else {
+            switch (direction) {
+                case Direction.NORTH -> this.y -= (int) speed;
+                case Direction.WEST -> this.x -= (int) speed;
+                case Direction.EAST -> this.x += (int) speed;
+                case Direction.SOUTH -> this.y += (int) speed;
+
+
+            }
         }
+    }
+
+
+    public void track(DynamicSprite player) {
+        int x = player.getXcoords();
+        int y = player.getYcoords();
+
+        float invNorm;
+        float vectX = x - this.x;
+        float vectY = y - this.y;
+
+        invNorm = (1 / ((float) (Math.sqrt(vectX * vectX + vectY * vectY))));
+        this.trackX = vectX * invNorm;
+        this.trackY = vectY * invNorm;
+
+
     }
 
     /**
