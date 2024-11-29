@@ -1,0 +1,27 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Dungeon-crwler:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Dungeon_crwler_jar</output-path>
+    <root id="archive" name="Dungeon-crwler.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/Game/src/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="directory" name="Game">
+        <element id="directory" name="Sprites">
+          <element id="dir-copy" path="$PROJECT_DIR$/Game/Sprites" />
+        </element>
+        <element id="directory" name="Loadables">
+          <element id="dir-copy" path="$PROJECT_DIR$/Game/Loadables/Levels" />
+        </element>
+      </element>
+      <element id="directory" name="src">
+        <element id="module-source" name="Dungeon-crwler" />
+      </element>
+      <element id="directory" name="libs">
+        <element id="extracted-dir" path="$PROJECT_DIR$/libs/jackson-core-2.9.9.jar" path-in-jar="/" />
+        <element id="dir-copy" path="$PROJECT_DIR$/libs/jackson-databind-2.9.9.3" />
+      </element>
+      <element id="file-copy" path="$PROJECT_DIR$/libs/jackson-core-2.9.9.jar" />
+      <element id="dir-copy" path="$PROJECT_DIR$/libs/jackson-databind-2.9.9.3" />
+    </root>
+  </artifact>
+</component>
