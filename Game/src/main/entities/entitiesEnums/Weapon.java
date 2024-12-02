@@ -1,11 +1,11 @@
 package main.entities.entitiesEnums;
 
 public enum Weapon {
-    KUNAI(6,"./Game/Sprites/Weapons/Kunai/main.Main.Entities.Sprite.png","./Game/Sprites/Weapons/Kunai/SpriteInHand.png",5,6,true,1,100,5),
-    SAI(10,"./Game/Sprites/Weapons/Sai/main.Main.Entities.Sprite.png","./Game/Sprites/Weapons/Sai/SpriteInHand.png",7,6,false,1,0,0),
-    SHURIKEN(3,"./Game/Sprites/Weapons/Shuriken/main.Main.Entities.Sprite.png","./Game/Sprites/Weapons/Shuriken/SpriteInHand.png",5,6,true,2,50,2),
-    CLUB(13,"./Game/Sprites/Weapons/Club/main.Main.Entities.Sprite.png","./Game/Sprites/Weapons/Club/SpriteInHand.png",10,6,false,1,0,0),
-    KATANA(11,"./Game/Sprites/Weapons/Katana/main.Main.Entities.Sprite.png","./Game/Sprites/Weapons/Katana/SpriteInHand.png",13,6,false,1,0,0),
+    KUNAI(6,"./Game/Sprites/Weapons/Kunai/Sprite.png","./Game/Sprites/Weapons/Kunai/Sprite.png",5,6,true,1,100,5),
+    SAI(10,"./Game/Sprites/Weapons/Sai/Sprite.png","./Game/Sprites/Weapons/Sai/SpriteInHand.png",7,6,false,1,0,0),
+    SHURIKEN(3,"./Game/Sprites/Weapons/Shuriken/Sprite.png","./Game/Sprites/Weapons/Shuriken/Sprite.png",5,6,true,2,50,2),
+    CLUB(13,"./Game/Sprites/Weapons/Club/Sprite.png","./Game/Sprites/Weapons/Club/SpriteInHand.png",10,6,false,1,0,0),
+    KATANA(11,"./Game/Sprites/Weapons/Katana/Sprite.png","./Game/Sprites/Weapons/Katana/SpriteInHand.png",13,6,false,1,0,0),
     ;
 
 

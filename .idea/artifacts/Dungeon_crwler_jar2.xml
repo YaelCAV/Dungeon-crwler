@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Dungeon-crwler:jar2">
+    <output-path>$PROJECT_DIR$/out/artifacts/Dungeon_crwler_jar2</output-path>
+    <root id="archive" name="Dungeon-crwler.jar">
+      <element id="module-output" name="Dungeon-crwler" />
+      <element id="dir-copy" path="$PROJECT_DIR$/libs/jackson-databind-2.9.9.3" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/libs/jackson-core-2.9.9.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

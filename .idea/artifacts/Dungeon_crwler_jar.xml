@@ -14,7 +14,7 @@
         </element>
       </element>
       <element id="directory" name="src">
-        <element id="module-source" name="Dungeon-crwler" />
+        <element id="module-output" name="Dungeon-crwler" />
       </element>
       <element id="directory" name="libs">
         <element id="extracted-dir" path="$PROJECT_DIR$/libs/jackson-core-2.9.9.jar" path-in-jar="/" />

@@ -215,17 +215,16 @@ public class MonsterSprite extends Sprite implements Characters {
 
     private void move() {
         if (isTracking) {
-            System.out.println(trackX);
-            System.out.println(trackY);
+
 
 
             if (trackX > 0 && trackY > 0) {
                 if (Math.abs(x) > Math.abs(y)) {
                     this.direction = Direction.EAST;
-                    System.out.println(direction);
+
                 } else {
                     this.direction = Direction.SOUTH;
-                    System.out.println(direction);
+
                 }
                 this.x += (int) (this.trackX * speed);
                 this.y += (int) (this.trackY * speed);
@@ -234,10 +233,10 @@ public class MonsterSprite extends Sprite implements Characters {
             } else if (trackX < 0 && trackY > 0) {
                 if (Math.abs(x) > Math.abs(y)) {
                     this.direction = Direction.WEST;
-                    System.out.println(direction);
+
                 } else {
                     this.direction = Direction.SOUTH;
-                    System.out.println(direction);
+
                 }
                 this.x += (int) (this.trackX * speed);
                 this.y += (int) (this.trackY * speed);
@@ -245,10 +244,10 @@ public class MonsterSprite extends Sprite implements Characters {
             } else if (trackX < 0 && trackY < 0) {
                 if (Math.abs(x) > Math.abs(y)) {
                     this.direction = Direction.WEST;
-                    System.out.println(direction);
+
                 } else {
                     this.direction = Direction.NORTH;
-                    System.out.println(direction);
+
                 }
                 this.x += (int) (this.trackX * speed);
                 this.y += (int) (this.trackY * speed);
@@ -256,10 +255,10 @@ public class MonsterSprite extends Sprite implements Characters {
             } else if (trackX > 0 && trackY < 0) {
                 if (Math.abs(x) > Math.abs(y)) {
                     this.direction = Direction.EAST;
-                    System.out.println(direction);
+
                 } else {
                     this.direction = Direction.NORTH;
-                    System.out.println(direction);
+
                 }
                 this.x += (int) (this.trackX * speed);
                 this.y += (int) (this.trackY * speed);
